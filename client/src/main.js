@@ -1,6 +1,10 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import {
+  Select,
+  Input,
+  InputPassword,
+  Avatar,
   Table,
   Card,
   Menu,
@@ -41,6 +45,10 @@ app.use(List);
 app.use(Menu);
 app.use(Card);
 app.use(Table);
+app.use(Avatar);
+app.use(Select);
+app.use(Input);
+app.use(InputPassword);
 app.mount("#app");
 
 app.config.globalProperties.$message = message;

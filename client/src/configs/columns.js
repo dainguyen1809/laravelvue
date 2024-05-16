@@ -22,6 +22,7 @@ export const columns = [
     title: "Department",
     dataIndex: "department",
     key: "departments",
+    responsive: ["sm"],
   },
   {
     title: "Status",
@@ -48,4 +49,10 @@ export const columns = [
   //     dataIndex: "updated_at",
   //     key: "updated_at",
   //   },
+  {
+    title: "Action",
+    dataIndex: "action",
+    key: "action",
+    fixed: "right",
+  },
 ];

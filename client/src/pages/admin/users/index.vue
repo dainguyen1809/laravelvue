@@ -1,9 +1,19 @@
 <template>
   <div>
     <a-card title="Accounts" :bordered="false" style="width: 100%">
+      <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-end">
+          <router-link :to="{ name: 'admin-users-create' }">
+            <a-button type="primary">
+              <font-awesome-icon icon="plus" />
+            </a-button>
+          </router-link>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-12">
-          <a-table :dataSource="users" :columns="columns">
+          <a-table :dataSource="users" :columns="columns" :scroll="{ x: 576 }">
             <template #bodyCell="{ column, index, record }">
               <template v-if="column.key === 'index'">
                 <span>
@@ -42,9 +52,6 @@ export default defineComponent({
         .get("http://127.0.0.1:8000/api/user")
         .then((res) => {
           users.value = res.data;
-          console.log(res.data);
-          // //tra ve api
-          // console.log(users);
         })
         .catch((e) => {
           console.log(e);
