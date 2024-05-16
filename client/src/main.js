@@ -1,6 +1,14 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-import { Menu, List, Drawer, Button, message } from "ant-design-vue";
+import {
+  Table,
+  Card,
+  Menu,
+  List,
+  Drawer,
+  Button,
+  message,
+} from "ant-design-vue";
 
 import "./style.css";
 import "ant-design-vue/dist/reset.css";
@@ -13,6 +21,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
+
+import axios from "axios";
+window.axios = axios;
 
 library.add(fas, fab, far);
 
@@ -28,6 +39,8 @@ app.use(Button);
 app.use(Drawer);
 app.use(List);
 app.use(Menu);
+app.use(Card);
+app.use(Table);
 app.mount("#app");
 
 app.config.globalProperties.$message = message;
