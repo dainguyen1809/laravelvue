@@ -1,7 +1,7 @@
 <template>
   <div>
-    <form @submit.prevent="submitUser()">
-      <a-card title="Add a new account" style="width: 100%">
+    <form @submit.prevent="updateUser()">
+      <a-card title="Update user account" style="width: 100%">
         <div class="row">
           <div class="col-sm-4">
             <div class="row">
@@ -163,6 +163,15 @@
             </div>
 
             <div class="row mb-3">
+              <div class="col-12 col-sm-3 text-start text-sm-end"></div>
+              <div class="col-12 col-sm-6">
+                <a-checkbox v-model:checked="change_password">
+                  Change Password
+                </a-checkbox>
+              </div>
+            </div>
+
+            <div class="row mb-3" v-if="change_password == true">
               <div class="col-12 col-sm-3 text-start text-sm-end">
                 <label for="">
                   <span class="text-danger me-2">*</span>
@@ -187,7 +196,7 @@
               </div>
             </div>
 
-            <div class="row mb-3">
+            <div class="row mb-3" v-if="change_password == true">
               <div class="col-12 col-sm-3 text-start text-sm-end">
                 <label for="">
                   <span class="text-danger me-2">*</span>
@@ -209,6 +218,28 @@
                 <small v-if="errors.password" class="text-danger">{{
                   errors.password[1]
                 }}</small>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12 col-sm-3 text-start text-sm-end">
+                <label for="">
+                  <span>Recent Login:</span>
+                </label>
+              </div>
+              <div class="col-12 col-sm-6">
+                <span>{{ login_at }}</span>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12 col-sm-3 text-start text-sm-end">
+                <label for="">
+                  <span>Recent Change Password:</span>
+                </label>
+              </div>
+              <div class="col-12 col-sm-6">
+                <span>{{ change_password_at }}</span>
               </div>
             </div>
           </div>
@@ -234,12 +265,14 @@ import axios from "axios";
 import { defineComponent, reactive, ref, toRefs } from "vue";
 import { useMenu } from "../../../store/menu";
 import { message } from "ant-design-vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { responsiveArray } from "ant-design-vue/es/_util/responsiveObserve";
 
 export default defineComponent({
   setup() {
     useMenu().onSelectedKeys(["admin-users"]);
     const router = useRouter();
+    const route = useRoute();
     const user_status = ref([]);
     const department = ref([]);
     const users = reactive({
@@ -250,35 +283,48 @@ export default defineComponent({
       password_confirmation: "",
       department_id: [],
       status_id: [],
+      change_password: false,
+      login_at: "",
+      change_password_at: "",
     });
 
     const errors = ref({});
 
-    const createUser = () => {
+    const editUser = () => {
       axios
-        .get("http://127.0.0.1:8000/api/users/create")
+        .get(`http://127.0.0.1:8000/api/users/edit/${route.params.id} `)
         .then((res) => {
+          users.username = res.data.user.username;
+          users.name = res.data.user.name;
+          users.email = res.data.user.email;
+          users.department_id = res.data.user.department_id;
+          users.status_id = res.data.user.status_id;
+
+          res.data.user.login_at
+            ? (users.login_at = res.data.user.login_at)
+            : (users.login_at = "Unknow");
+          res.data.user.change_password_at
+            ? (users.change_password_at = res.data.user.change_password_at)
+            : (users.change_password_at = "Unknow");
+
           user_status.value = res.data.user_status;
           department.value = res.data.department;
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((error) => {
+          console.log(error);
         });
     };
 
-    const filterOption = (input, option) => {
-      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-    };
-
-    const submitUser = () => {
+    const updateUser = () => {
       axios
-        .post("http://127.0.0.1:8000/api/users/store", users)
+        .post(
+          `http://127.0.0.1:8000/api/users/update/${route.params.id}`,
+          users
+        )
         .then((res) => {
-          if (res) {
-            message.success("Create user success ☻");
+          if (res.status == 200) {
+            message.success("Update user account success ☻");
             router.push({ name: "admin-users" });
-          } else {
-            message.error("An error has occured");
           }
         })
         .catch((error) => {
@@ -287,14 +333,18 @@ export default defineComponent({
         });
     };
 
-    createUser();
+    const filterOption = (input, option) => {
+      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    };
+
+    editUser();
 
     return {
       user_status,
       department,
       ...toRefs(users),
       filterOption,
-      submitUser,
+      updateUser,
       errors,
     };
   },

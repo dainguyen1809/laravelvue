@@ -4,9 +4,14 @@ export const columns = [
     key: "index",
   },
   {
-    title: "Role",
+    title: "Username",
     dataIndex: "username",
     key: "username",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
   },
   {
     title: "Avatar",

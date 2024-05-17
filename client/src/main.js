@@ -3,7 +3,6 @@ import { createPinia } from "pinia";
 import {
   Select,
   Input,
-  InputPassword,
   Avatar,
   Table,
   Card,
@@ -12,6 +11,7 @@ import {
   Drawer,
   Button,
   message,
+  Checkbox,
 } from "ant-design-vue";
 
 import "./style.css";
@@ -48,7 +48,7 @@ app.use(Table);
 app.use(Avatar);
 app.use(Select);
 app.use(Input);
-app.use(InputPassword);
+app.use(Checkbox);
 app.mount("#app");
 
 app.config.globalProperties.$message = message;
