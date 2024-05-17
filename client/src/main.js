@@ -1,8 +1,5 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
-<<<<<<< HEAD
-import { Menu, List, Drawer, Button, message } from "ant-design-vue";
-=======
 import {
   Select,
   Input,
@@ -16,7 +13,6 @@ import {
   message,
   Checkbox,
 } from "ant-design-vue";
->>>>>>> develop
 
 import "./style.css";
 import "ant-design-vue/dist/reset.css";
@@ -30,12 +26,9 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 
-<<<<<<< HEAD
-=======
 import axios from "axios";
 window.axios = axios;
 
->>>>>>> develop
 library.add(fas, fab, far);
 
 import router from "./router";
@@ -50,15 +43,12 @@ app.use(Button);
 app.use(Drawer);
 app.use(List);
 app.use(Menu);
-<<<<<<< HEAD
-=======
 app.use(Card);
 app.use(Table);
 app.use(Avatar);
 app.use(Select);
 app.use(Input);
 app.use(Checkbox);
->>>>>>> develop
 app.mount("#app");
 
 app.config.globalProperties.$message = message;
