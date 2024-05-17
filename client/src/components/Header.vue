@@ -24,28 +24,6 @@ p
       </div>
 
       <div
-        class="col-sm-3 d-none d-sm-flex align-items-center justify-content-sm-end"
-      >
-        <template>
-          <a-collapse :open="activeKey">
-            <a-collapse-panel key="1" header="This is panel header 1">
-              <p>Admin</p>
-            </a-collapse-panel>
-            <a-collapse-panel key="2" header="This is panel header 2">
-              <p>{{ text }}</p>
-            </a-collapse-panel>
-            <a-collapse-panel
-              key="3"
-              header="This is panel header 3"
-              collapsible="disabled"
-            >
-              <p>{{ text }}</p>
-            </a-collapse-panel>
-          </a-collapse>
-        </template>
-      </div>
-
-      <div
         class="col-1 d-flex d-sm-none align-items-center justify-content-center"
       >
         <span @click="showAdmin()">

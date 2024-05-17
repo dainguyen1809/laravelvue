@@ -21,6 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+<<<<<<< HEAD
+=======
+        'username',
+        'avatar',
+        'status_id',
+        'department_id',
+        'login_at',
+        'change_password_at',
+>>>>>>> develop
     ];
 
     /**
